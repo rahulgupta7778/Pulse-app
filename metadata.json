@@ -1,0 +1,10 @@
+{
+  "name": "Pulse",
+  "description": "An AI-powered productivity companion to keep pace with your day, manage schedules, task priorities, goals, and track focus.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
