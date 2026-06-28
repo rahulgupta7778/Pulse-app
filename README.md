@@ -4,7 +4,7 @@
 
 Pulse is a full-stack productivity assistant that combines task management, goal/habit tracking, timetable scheduling, AI-powered chat, gamification (XP/levels/achievements), Google Calendar/Tasks/Gmail sync, push notifications, and a built-in Pomodoro focus mode — all in a single-page app with a Node.js + SQLite backend.
 
-[Deployed Link - https://pulse-1088163571214.asia-southeast1.run.app]
+[ Deployed Link - https://pulse-1088163571214.asia-southeast1.run.app ]
 ---
 
 ## Features
