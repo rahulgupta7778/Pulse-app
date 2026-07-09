@@ -1,10 +1,10 @@
 {
-  "projectId": "dependable-canopy-8k7s0",
-  "appId": "1:1088163571214:web:f72acd56106bb7ab073e5f",
-  "apiKey": "AIzaSyDIDCp3IykQPtmSuNROelv96AYOZD3x5Xs",
-  "authDomain": "dependable-canopy-8k7s0.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-pulse-33f2e1ce-4561-43b7-b026-bcd032d772a3",
-  "storageBucket": "dependable-canopy-8k7s0.firebasestorage.app",
-  "messagingSenderId": "1088163571214",
+  "projectId": "",
+  "appId": "",
+  "apiKey": "",
+  "authDomain": "",
+  "firestoreDatabaseId": "",
+  "storageBucket": "",
+  "messagingSenderId": "",
   "measurementId": ""
 }
