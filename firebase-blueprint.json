@@ -1,0 +1,281 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and settings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "dob": { "type": "string" },
+        "autoPilot": { "type": "integer" }
+      },
+      "required": ["id", "name", "email"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Task item with priority, deadline, category, and subtasks",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "priority": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "dueTime": { "type": "string" },
+        "duration": { "type": "integer" },
+        "category": { "type": "string" },
+        "completed": { "type": "integer" },
+        "completedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "subtasks": { "type": "string" },
+        "googleEventId": { "type": "string" },
+        "position": { "type": "integer" },
+        "source": { "type": "string" },
+        "externalId": { "type": "string" },
+        "externalUrl": { "type": "string" },
+        "links": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "required": ["id", "userId", "title"]
+    },
+    "FixedSlot": {
+      "title": "FixedSlot",
+      "description": "Fixed calendar slot for a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "dayOfWeek": { "type": "integer" },
+        "color": { "type": "string" },
+        "googleEventId": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "startTime", "endTime"]
+    },
+    "UserToken": {
+      "title": "UserToken",
+      "description": "OAuth and integration tokens for external services",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "accessToken": { "type": "string" },
+        "refreshToken": { "type": "string" },
+        "tokenExpiry": { "type": "string" },
+        "calendarConnected": { "type": "integer" },
+        "calendarEmail": { "type": "string" },
+        "gmailConnected": { "type": "integer" },
+        "gmailEmail": { "type": "string" },
+        "zoomConnected": { "type": "integer" },
+        "zoomEmail": { "type": "string" },
+        "zoomRefreshToken": { "type": "string" },
+        "lastCalendarSync": { "type": "string" },
+        "lastGmailSync": { "type": "string" },
+        "lastZoomSync": { "type": "string" }
+      },
+      "required": ["userId"]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "User productivity and status logs per day",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "data": { "type": "string" }
+      },
+      "required": ["id", "userId", "date"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Push and in-app notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "taskId": { "type": "string" },
+        "read": { "type": "integer" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "type", "title"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "User's long term goals",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "targetCount": { "type": "integer" },
+        "progress": { "type": "integer" },
+        "streak": { "type": "integer" },
+        "bestStreak": { "type": "integer" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "archived": { "type": "integer" },
+        "links": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "required": ["id", "userId", "title"]
+    },
+    "Habit": {
+      "title": "Habit",
+      "description": "User's daily or weekly habits",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "goalId": { "type": "string" },
+        "title": { "type": "string" },
+        "frequency": { "type": "string" },
+        "daysOfWeek": { "type": "string" },
+        "streak": { "type": "integer" },
+        "bestStreak": { "type": "integer" },
+        "totalCount": { "type": "integer" },
+        "createdAt": { "type": "string" },
+        "archived": { "type": "integer" },
+        "links": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "required": ["id", "userId", "title"]
+    },
+    "HabitLog": {
+      "title": "HabitLog",
+      "description": "Log of completed habits on specific dates",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "habitId": { "type": "string" },
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "completed": { "type": "integer" }
+      },
+      "required": ["id", "habitId", "userId", "date"]
+    },
+    "Connector": {
+      "title": "Connector",
+      "description": "Integration connector details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "service": { "type": "string" },
+        "connected": { "type": "integer" },
+        "accessToken": { "type": "string" },
+        "refreshToken": { "type": "string" },
+        "tokenExpiry": { "type": "string" },
+        "email": { "type": "string" },
+        "externalId": { "type": "string" },
+        "metadata": { "type": "string" },
+        "lastSync": { "type": "string" }
+      },
+      "required": ["id", "userId", "service"]
+    },
+    "XpLog": {
+      "title": "XpLog",
+      "description": "User XP points history log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "integer" },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "amount", "reason"]
+    },
+    "PushSubscription": {
+      "title": "PushSubscription",
+      "description": "Web push subscription details for a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "endpoint": { "type": "string" },
+        "p256dh": { "type": "string" },
+        "auth": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "endpoint"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "User unlocked achievements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "key": { "type": "string" },
+        "title": { "type": "string" },
+        "unlockedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "key", "title"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User settings and profiles"
+    },
+    "tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User tasks"
+    },
+    "fixed_slots/{slotId}": {
+      "schema": "FixedSlot",
+      "description": "Fixed slot reservations"
+    },
+    "user_tokens/{tokenId}": {
+      "schema": "UserToken",
+      "description": "OAuth application tokens"
+    },
+    "daily_logs/{logId}": {
+      "schema": "DailyLog",
+      "description": "Daily tracking metrics"
+    },
+    "notifications/{notifId}": {
+      "schema": "Notification",
+      "description": "System-generated or app notifications"
+    },
+    "goals/{goalId}": {
+      "schema": "Goal",
+      "description": "User-authored goals"
+    },
+    "habits/{habitId}": {
+      "schema": "Habit",
+      "description": "Habits tracking structures"
+    },
+    "habit_logs/{logId}": {
+      "schema": "HabitLog",
+      "description": "Daily habit logs"
+    },
+    "connectors/{connectorId}": {
+      "schema": "Connector",
+      "description": "SaaS connectors"
+    },
+    "xp_log/{logId}": {
+      "schema": "XpLog",
+      "description": "XP rewards log"
+    },
+    "push_subscriptions/{subId}": {
+      "schema": "PushSubscription",
+      "description": "Web push service subscriptions"
+    },
+    "achievements/{achId}": {
+      "schema": "Achievement",
+      "description": "Achievements awarded to user"
+    }
+  }
+}

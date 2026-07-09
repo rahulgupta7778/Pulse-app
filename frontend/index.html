@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse - keep pace with your day</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/tasks.css" />
+    <link rel="stylesheet" href="css/calendar.css" />
+    <link rel="stylesheet" href="css/goals.css" />
+    <link rel="stylesheet" href="css/analytics.css" />
+    <link rel="stylesheet" href="css/ai-assistant.css" />
+    <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+</head>
+
+<body>
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-bg"></div>
+        <div class="splash-content">
+            <div class="splash-logo-ring">
+                <div class="splash-logo">
+                    <svg class="splash-icon" viewBox="0 0 40 40" width="40" height="40">
+                        <path d="M20 4 L24 16 L36 16 L26 24 L30 36 L20 28 L10 36 L14 24 L4 16 L16 16 Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="splash-title">Pulse</div>
+            <div class="splash-sub">keep pace with your day</div>
+            <div class="splash-loader">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+    <div class="bg-orb bg-orb--4"></div>
+    <div class="bg-particle" style="--x:10%;--y:20%;--s:3px;--d:14s;--delay:-2s;"></div>
+    <div class="bg-particle" style="--x:85%;--y:15%;--s:4px;--d:18s;--delay:-5s;"></div>
+    <div class="bg-particle" style="--x:50%;--y:70%;--s:2px;--d:12s;--delay:-8s;"></div>
+    <div class="bg-particle" style="--x:30%;--y:85%;--s:5px;--d:22s;--delay:-1s;"></div>
+    <div class="bg-particle" style="--x:70%;--y:40%;--s:3px;--d:16s;--delay:-10s;"></div>
+    <div class="bg-particle" style="--x:90%;--y:60%;--s:2px;--d:20s;--delay:-4s;"></div>
+    <div class="bg-particle" style="--x:15%;--y:50%;--s:4px;--d:13s;--delay:-7s;"></div>
+    <div class="bg-particle" style="--x:60%;--y:90%;--s:3px;--d:17s;--delay:-3s;"></div>
+    <div class="bg-particle" style="--x:40%;--y:10%;--s:2px;--d:15s;--delay:-9s;"></div>
+    <div class="bg-particle" style="--x:75%;--y:75%;--s:5px;--d:25s;--delay:-6s;"></div>
+    <div class="shooting-star"></div>
+    <div class="aurora-wave"></div>
+    <!-- NAV -->
+    <nav id="mainNav" class="hidden">
+        <div class="nav-inner">
+            <h2 class="logo">
+              <span class="logo-icon"></span>
+              <span class="logo-text">Pulse</span>
+              <span class="logo-tagline">keep pace</span>
+            </h2>
+            <button id="hamburgerBtn" class="hamburger" aria-label="Toggle menu">☰</button>
+            <ul class="nav-links">
+                <li><a href="#dashboard" class="active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#tasks" data-page="tasks">Tasks</a></li>
+                <li><a href="#timetable" data-page="timetable">Timetable</a></li>
+                <li><a href="#goals" data-page="goals">Goals & Habits</a></li>
+                <li><a href="#analytics" data-page="analytics">Analytics</a></li>
+                <li><a href="#progress" data-page="progress">Progress</a></li>
+                <li><a href="#assistant" data-page="assistant">AI Assistant</a></li>
+                <li class="nav-mobile-only"><span id="userBadgeMobile"></span></li>
+                <li class="nav-mobile-only"><button id="connBtnMobile" class="btn-sm">🔗 Connections</button></li>
+                <li class="nav-mobile-only"><button id="themeToggleMobile" class="btn-sm">Light mode</button></li>
+                <li class="nav-mobile-only"><button id="notifBellMobile" class="btn-sm">🔔 Notifications</button></li>
+                <li class="nav-mobile-only"><button id="logoutBtnMobile" class="btn-sm">Logout</button></li>
+            </ul>
+            <div class="nav-right">
+                <button id="themeToggle" class="theme-toggle" title="Toggle theme"></button>
+                <button id="connBtn" class="btn-sm" title="Connections">🔗</button>
+                <span id="userBadge"></span>
+                <button id="logoutBtn" class="btn-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <div id="connDropdown" class="conn-dropdown">
+        <div class="conn-header">
+            <strong>🔗 Connections</strong>
+            <div style="display:flex;align-items:center;gap:0.35rem;">
+                <button id="connSyncAll" class="btn-sm">🔄 Sync All</button>
+                <button id="connCloseBtn" class="btn-sm" style="font-size:1rem;padding:0.25rem 0.5rem;line-height:1;">✕</button>
+            </div>
+        </div>
+        <div id="connList"></div>
+    </div>
+
+    <!-- LANDING PAGE -->
+    <section id="page-landing" class="page active">
+        <!-- Navigation Bar -->
+        <header class="landing-header" id="landingHeader">
+            <div class="landing-header-inner">
+                <div class="landing-logo" id="landingLogo">
+                    <span class="landing-logo-circle" id="landingLogoCircle"></span>
+                    <span class="landing-logo-text" id="landingLogoText">Pulse</span>
+                </div>
+                <div class="landing-header-actions" id="landingHeaderActions">
+                    <button id="landingThemeBtn" class="landing-theme-toggle" title="Toggle theme">🌞</button>
+                    <button id="landingBtnLoginHeader" class="landing-nav-btn landing-btn-login">Log In</button>
+                    <button id="landingBtnSignupHeader" class="landing-nav-btn landing-btn-signup">Sign Up</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="landing-hero-backdrop"></div>
+
+        <div class="landing-container">
+
+            <!-- Hero Section -->
+            <section class="landing-hero" id="landingHero">
+                <div class="hero-badge" id="landingHeroBadge">⚡ Meet Pulse v2.0</div>
+                <h1 class="hero-headline" id="landingHeroHeadline">Keep Pace with Your Day</h1>
+                <p class="hero-subheading" id="landingHeroSubheading">
+                    A gorgeous, high-fidelity productivity ecosystem. Pulse integrates smart schedules, fitness tracking, ambient music, and advanced AI task parsing with an active cognitive load monitor to protect your flow state.
+                </p>
+                <div class="hero-actions" id="landingHeroActions">
+                    <button id="landingBtnGetStartedHero" class="landing-btn-primary btn-get-started">Start Keeping Pace &rarr;</button>
+                    <button id="landingBtnExploreFeatures" class="landing-btn-secondary btn-scroll-features">Explore Features</button>
+                </div>
+
+                <!-- Premium Floating App Mockup -->
+                <div class="hero-preview-frame animate-fade-in" id="heroPreviewFrame">
+                    <div class="preview-frame-header">
+                        <div class="preview-dots"><span></span><span></span><span></span></div>
+                        <div class="preview-address">pulse.workspace/dashboard</div>
+                    </div>
+                    <div class="preview-frame-body">
+                        <div class="preview-sidebar">
+                            <div class="sidebar-item active">📊 Dashboard</div>
+                            <div class="sidebar-item">📅 Schedule</div>
+                            <div class="sidebar-item">🧠 Flow State</div>
+                            <div class="sidebar-item">🔗 Connectors</div>
+                        </div>
+                        <div class="preview-main">
+                            <div class="preview-grid">
+                                <div class="preview-widget">
+                                    <div class="widget-title">🧠 Cognitive Load Meter</div>
+                                    <div class="load-bar-container">
+                                        <div class="load-bar-fill" style="width: 42%;"></div>
+                                    </div>
+                                    <div class="widget-desc">Status: <strong>Balanced Flow (42%)</strong>. You have 3 tasks and 1 event scheduled for today.</div>
+                                </div>
+                                <div class="preview-widget">
+                                    <div class="widget-title">⚡ Focus Sessions</div>
+                                    <div class="sessions-circles">
+                                        <div class="session-circle active"> Inhale</div>
+                                        <div class="session-circle-label">Click tab below to try live breath!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-tasks-box">
+                                <div class="widget-title">📝 Active Tasks & Schedule</div>
+                                <div class="preview-task-item checked">
+                                    <input type="checkbox" checked disabled>
+                                    <span>Extract Gmail action items into checklist</span>
+                                    <span class="preview-tag tag-work">Work</span>
+                                </div>
+                                <div class="preview-task-item">
+                                    <input type="checkbox" disabled>
+                                    <span>Review roadmap milestones</span>
+                                    <span class="preview-tag tag-work">Work</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- INTERACTIVE PLAYGROUND SECTION (Try before signup) -->
+            <section class="landing-playground" id="playgroundSection">
+                <div class="playground-intro">
+                    <div class="playground-badge">🛠️ INTERACTIVE PREVIEW</div>
+                    <h2 class="section-title">Experience Pulse in Real-Time</h2>
+                    <p class="section-subtitle">Click through the tabs below to test our key features instantly before creating an account.</p>
+                </div>
+
+                <div class="playground-card">
+                    <!-- Tab Headers -->
+                    <div class="playground-tabs" id="playgroundTabs">
+                        <button class="playground-tab active" data-tab="cognitive">
+                            <span class="tab-icon">🧠</span>
+                            <span class="tab-label">Cognitive Guard</span>
+                        </button>
+                        <button class="playground-tab" data-tab="parser">
+                            <span class="tab-icon">✨</span>
+                            <span class="tab-label">Smart AI Parser</span>
+                        </button>
+                        <button class="playground-tab" data-tab="breathing">
+                            <span class="tab-icon">🌬️</span>
+                            <span class="tab-label">Mindful Breath</span>
+                        </button>
+                        <button class="playground-tab" data-tab="connections">
+                            <span class="tab-icon">🔗</span>
+                            <span class="tab-label">Platform Sync</span>
+                        </button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="playground-tab-contents">
+                        
+                        <!-- TAB 1: COGNITIVE LOAD GUARD -->
+                        <div class="playground-tab-content active" id="tabContent-cognitive">
+                            <div class="tab-layout-grid">
+                                <div class="tab-text-column">
+                                    <h3>Auto-Evaluate Mental Energy</h3>
+                                    <p>Our Cognitive Load Meter constantly assesses your planned calendar events, unfinished tasks, and subjective energy levels. Try toggling workload factors on the right to see how your recommendation adapts in real-time!</p>
+                                    
+                                    <div class="interactive-controls">
+                                        <label class="control-toggle-label">
+                                            <input type="checkbox" id="toggleWorkloadTasks" checked>
+                                            <span class="custom-toggle"></span>
+                                            <span>Multiple Unfinished High-Priority Tasks</span>
+                                        </label>
+                                        <label class="control-toggle-label">
+                                            <input type="checkbox" id="toggleWorkloadEvents">
+                                            <span class="custom-toggle"></span>
+                                            <span>Overlapping Calendar Slots</span>
+                                        </label>
+                                        <label class="control-toggle-label">
+                                            <input type="checkbox" id="toggleWorkloadEnergy" checked>
+                                            <span class="custom-toggle"></span>
+                                            <span>Unresolved high-priority Gmail messages</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="tab-visual-column">
+                                    <div class="load-gauge-card">
+                                        <div class="gauge-title">Cognitive Load Meter</div>
+                                        <div class="gauge-container">
+                                            <div class="gauge-display-value" id="gaugeDisplayPercent">55%</div>
+                                            <svg class="gauge-ring-svg" viewBox="0 0 100 50">
+                                                <path class="gauge-ring-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke-width="8" />
+                                                <path class="gauge-ring-fill" id="gaugeRingFill" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke-width="8" stroke-dasharray="126" stroke-dashoffset="63" />
+                                            </svg>
+                                        </div>
+                                        <div class="gauge-status-tag status-balanced" id="gaugeStatusText">Moderate Workload</div>
+                                        <div class="gauge-advice" id="gaugeAdviceText">You have a moderate cognitive load. Keep going, but remember to take a short break after completing your current task!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: SMART AI PARSER -->
+                        <div class="playground-tab-content" id="tabContent-parser">
+                            <div class="tab-layout-grid">
+                                <div class="tab-text-column">
+                                    <h3>AI Task & Schedule Parsing</h3>
+                                    <p>Say goodbye to complex form wizards. Type or speak standard phrases. Our parser identifies priority, extracts deadlines, and matches categories automatically. Try editing or clicking a preset below!</p>
+                                    
+                                    <div class="parser-presets">
+                                        <button class="parser-preset-btn" data-text="Review marketing slides by Friday noon !high #work">🚨 Work Priority</button>
+                                        <button class="parser-preset-btn" data-text="Morning workout daily at 7:00 AM #health">🌅 Daily Routine</button>
+                                        <button class="parser-preset-btn" data-text="Buy groceries tomorrow morning !low #personal">🛒 Personal Errand</button>
+                                    </div>
+
+                                    <div class="parser-input-wrapper">
+                                        <input type="text" id="playgroundParserInput" value="Review marketing slides by Friday noon !high #work" placeholder="Type a task with !priority or #category...">
+                                    </div>
+                                </div>
+                                <div class="tab-visual-column">
+                                    <div class="parser-result-card">
+                                        <div class="result-header">Parsed Task Output</div>
+                                        <div class="result-body">
+                                            <div class="result-row">
+                                                <span class="result-label">Task Title:</span>
+                                                <span class="result-value" id="parseTitle">Review marketing slides</span>
+                                            </div>
+                                            <div class="result-row">
+                                                <span class="result-label">Due Date:</span>
+                                                <span class="result-value highlight" id="parseDate">Friday, 12:00 PM</span>
+                                            </div>
+                                            <div class="result-row">
+                                                <span class="result-label">Priority:</span>
+                                                <span class="preview-tag tag-urgent" id="parsePriority">High</span>
+                                            </div>
+                                            <div class="result-row">
+                                                <span class="result-label">Category:</span>
+                                                <span class="preview-tag tag-work" id="parseCategory">Work</span>
+                                            </div>
+                                        </div>
+                                        <div class="result-footer">⚡ Instantly structured into your database</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: MINDFUL BREATH -->
+                        <div class="playground-tab-content" id="tabContent-breathing">
+                            <div class="tab-layout-grid">
+                                <div class="tab-text-column">
+                                    <h3>Interactive Resilient Breathing</h3>
+                                    <p>Calm your nervous system instantly. Pulse integrates custom audio-guided breathing tools. Click the start button on the right to test our guided focus circle with soft micro-scaling triggers.</p>
+                                    
+                                    <div class="breath-controls">
+                                        <button class="landing-btn-primary" id="btnPlaygroundBreath">Start Breathing Session</button>
+                                        <p class="breath-timer" id="playgroundBreathTimer">04:00 remaining</p>
+                                    </div>
+                                </div>
+                                <div class="tab-visual-column">
+                                    <div class="breath-visual-card">
+                                        <div class="breath-sphere-container">
+                                            <div class="breath-sphere-outer"></div>
+                                            <div class="breath-sphere" id="playgroundBreathSphere">
+                                                <span id="playgroundBreathText">Click Start</span>
+                                            </div>
+                                        </div>
+                                        <div class="breath-instructions" id="playgroundBreathInst">Align your breathing with the rhythm of the expanding circle.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: PLATFORM SYNC -->
+                        <div class="playground-tab-content" id="tabContent-connections">
+                            <div class="tab-layout-grid">
+                                <div class="tab-text-column">
+                                    <h3>Universal Platform Integration</h3>
+                                    <p>Unify your entire Google Workspace ecosystem. Pulse pulls action items from Gmail, active lists from Google Tasks, online links from Google Meet, and event timings from Google Calendar. Toggle connections below to see simulated real-time updates.</p>
+                                    
+                                    <div class="sync-toggles-grid">
+                                        <div class="sync-toggle-card" data-platform="gmail" id="syncCardGmail">
+                                            <div class="sync-icon">📧</div>
+                                            <div class="sync-info">
+                                                <div class="sync-name">Gmail Inbox</div>
+                                                <div class="sync-status" id="gmailStatusText">Not connected</div>
+                                            </div>
+                                            <button class="sync-action-btn" id="btnToggleSyncGmail">Connect</button>
+                                        </div>
+
+                                        <div class="sync-toggle-card" data-platform="gtasks" id="syncCardGtasks">
+                                            <div class="sync-icon">📋</div>
+                                            <div class="sync-info">
+                                                <div class="sync-name">Google Tasks</div>
+                                                <div class="sync-status" id="gtasksStatusText">Not connected</div>
+                                            </div>
+                                            <button class="sync-action-btn" id="btnToggleSyncGtasks">Connect</button>
+                                        </div>
+
+                                        <div class="sync-toggle-card" data-platform="gmeet" id="syncCardGmeet">
+                                            <div class="sync-icon">📹</div>
+                                            <div class="sync-info">
+                                                <div class="sync-name">Google Meet</div>
+                                                <div class="sync-status" id="gmeetStatusText">Not connected</div>
+                                            </div>
+                                            <button class="sync-action-btn" id="btnToggleSyncGmeet">Connect</button>
+                                        </div>
+
+                                        <div class="sync-toggle-card" data-platform="gcal" id="syncCardGcal">
+                                            <div class="sync-icon">📅</div>
+                                            <div class="sync-info">
+                                                <div class="sync-name">Google Calendar</div>
+                                                <div class="sync-status" id="gcalStatusText">Not connected</div>
+                                            </div>
+                                            <button class="sync-action-btn" id="btnToggleSyncGcal">Connect</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-visual-column">
+                                    <div class="live-feed-card">
+                                        <div class="feed-header">
+                                            <span class="feed-dot"></span>
+                                            <span>Pulse Sync Logs (Live Feed)</span>
+                                        </div>
+                                        <div class="feed-body" id="playgroundSyncFeed">
+                                            <div class="feed-row system-msg">&gt;_ Ready for active platform synchronization...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- NARRATIVE FEATURE FLOW (Fluid alternating rows) -->
+            <section class="narrative-features" id="narrativeFeatures">
+                <div class="narrative-header">
+                    <div class="playground-badge">👑 CORE ECOSYSTEM</div>
+                    <h2 class="section-title">Designed for Your Energy, Not Just Your Time</h2>
+                    <p class="section-subtitle">A collection of carefully calibrated productivity components working together as one cohesive dashboard.</p>
+                </div>
+
+                <!-- Row 1: Timetable & Schedule -->
+                <div class="narrative-row">
+                    <div class="narrative-content">
+                        <div class="narrative-icon">📅</div>
+                        <h3>Intelligent Smart Timetable</h3>
+                        <p>Ditch rigid spreadsheets. Our schedule builder checks for time collisions automatically, helps you plan around biological energy rhythms, and fits perfectly into standard daily routines. It's responsive, drag-capable, and simple to re-schedule on the fly.</p>
+                        <ul class="narrative-bullets">
+                            <li>Collision warning triggers prevent double-bookings.</li>
+                            <li>Differentiate easily between work, health, and personal blocks.</li>
+                            <li>Integrated with dynamic time-slot templates.</li>
+                        </ul>
+                    </div>
+                    <div class="narrative-visual">
+                        <div class="mock-timetable">
+                            <div class="timetable-slot active">
+                                <div class="slot-time">08:00 - 09:30</div>
+                                <div class="slot-title">🌅 Morning Deep Focus Session</div>
+                            </div>
+                            <div class="timetable-slot alert">
+                                <div class="slot-time">10:00 - 11:00</div>
+                                <div class="slot-title">⚡ Collision: Team Meeting vs. Gym Workout</div>
+                            </div>
+                            <div class="timetable-slot">
+                                <div class="slot-time">14:00 - 15:30</div>
+                                <div class="slot-title">🎨 Design System Auditing</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Roadmaps & Timeline goals -->
+                <div class="narrative-row alternate">
+                    <div class="narrative-visual">
+                        <div class="mock-roadmap">
+                            <div class="roadmap-milestone active">
+                                <div class="milestone-bullet">1</div>
+                                <div class="milestone-details">
+                                    <div class="milestone-title">Launch Beta App</div>
+                                    <div class="milestone-progress-bar"><div class="fill" style="width: 100%;"></div></div>
+                                </div>
+                            </div>
+                            <div class="roadmap-milestone active">
+                                <div class="milestone-bullet">2</div>
+                                <div class="milestone-details">
+                                    <div class="milestone-title">Integrate Platform API Sync</div>
+                                    <div class="milestone-progress-bar"><div class="fill" style="width: 65%;"></div></div>
+                                </div>
+                            </div>
+                            <div class="roadmap-milestone">
+                                <div class="milestone-bullet">3</div>
+                                <div class="milestone-details">
+                                    <div class="milestone-title">Global v2.0 Release</div>
+                                    <div class="milestone-progress-bar"><div class="fill" style="width: 0%;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="narrative-content">
+                        <div class="narrative-icon">🗺️</div>
+                        <h3>Interactive Roadmaps & Vision Boards</h3>
+                        <p>Keep your daily efforts linked directly with long-term aspirations. The goals dashboard lets you map milestones, track execution levels, and view continuous completion trends over days, weeks, or months.</p>
+                        <ul class="narrative-bullets">
+                            <li>Visualize long-term targets in a beautiful linear pipeline.</li>
+                            <li>Staggered micro-goals automatically unlock level XP.</li>
+                            <li>Integrated progress trends for structured visualization.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Row 3: Mindfulness & Mood Energy Mapping -->
+                <div class="narrative-row">
+                    <div class="narrative-content">
+                        <div class="narrative-icon">🎭</div>
+                        <h3>Mood Mapping & Biometric Energy</h3>
+                        <p>Your mood dictates your energy. Pulse allows quick daily mood logs—Focused, Calm, Stressed, or Tired—and recommends real-time schedule adaptations, task sequencing, or background audio tracks depending on your current focus needs.</p>
+                        <ul class="narrative-bullets">
+                            <li>Automatically adjusts Cognitive Load assessments.</li>
+                            <li>Links directly with integrated focus soundscapes.</li>
+                            <li>Maintains an eye-safe aesthetic layout across themes.</li>
+                        </ul>
+                    </div>
+                    <div class="narrative-visual">
+                        <div class="mock-moods">
+                            <div class="mood-card-mini active flex-row">
+                                <span class="mood-emoji">🧠</span>
+                                <div>
+                                    <div class="mood-title">Laser-Focused</div>
+                                    <div class="mood-desc">Recommended: 45m Pomodoro Block</div>
+                                </div>
+                            </div>
+                            <div class="mood-card-mini flex-row">
+                                <span class="mood-emoji">🧘</span>
+                                <div>
+                                    <div class="mood-title">Calm Flow State</div>
+                                    <div class="mood-desc">Recommended: High-Concept Design tasks</div>
+                                </div>
+                            </div>
+                            <div class="mood-card-mini alert flex-row">
+                                <span class="mood-emoji">😫</span>
+                                <div>
+                                    <div class="mood-title">Cognitively Overloaded</div>
+                                    <div class="mood-desc">Recommended: Auto-Relieve Breath Session</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements & Progress Section -->
+            <section class="landing-achievements" id="landingAchievementsSection">
+                <div class="achievements-inner" id="achievementsInnerContainer">
+                    <div class="achievements-text" id="achievementsTextContainer">
+                        <div class="playground-badge">🏆 LEVEL UP</div>
+                        <h2 id="achievementsTitle">Gamified Achievements & Consistency Rules</h2>
+                        <p id="achievementsDesc">Pulse features an active gamification engine that rewards you for consistency. Gain XP, unlock prestigious profile badges, and track your daily streaks.</p>
+                        <ul class="achievements-list" id="landingAchievementsList">
+                            <li id="achItemOwl"><span>🦉</span> <strong>Night Owl:</strong> Complete urgent tasks late in the evening.</li>
+                            <li id="achItemFocus"><span>🧠</span> <strong>Deep Work Master:</strong> Stay laser-focused on sessions longer than 25 minutes.</li>
+                            <li id="achItemBird"><span>🌅</span> <strong>Early Bird:</strong> Jumpstart your productivity before 8:00 AM.</li>
+                            <li id="achItemChampion"><span>👑</span> <strong>Habit Champion:</strong> Maintain a 14-day streak of consistency.</li>
+                        </ul>
+                    </div>
+                    <div class="achievements-visual" id="achievementsVisualContainer">
+                        <div class="visual-badge-card" id="visualBadgeChampion">
+                            <div class="badge-ring" id="badgeRingChampion">👑</div>
+                            <h4 id="badgeTitleChampion">Habit Champion</h4>
+                            <p id="badgeDescChampion">Unlocked for pristine consistency</p>
+                        </div>
+                        <div class="visual-badge-card" id="visualBadgeDeepWork">
+                            <div class="badge-ring" id="badgeRingDeepWork">🧠</div>
+                            <h4 id="badgeTitleDeepWork">Deep Work Master</h4>
+                            <p id="badgeDescDeepWork">Unlocked for focused sessions</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="landing-cta" id="landingCtaSection">
+                <div class="cta-card" id="landingCtaCard">
+                    <h2 id="ctaTitle">Ready to Elevate Your Energy & Flow?</h2>
+                    <p id="ctaDesc">Join thousands of high-performers tracking their daily schedules, energy levels, and tasks in perfect sync.</p>
+                    <button id="landingBtnGetStartedCta" class="landing-btn-primary btn-get-started-cta">Keep Pace with My Day &rarr;</button>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="landing-footer" id="landingFooter">
+                <p id="footerCopyright">&copy; 2026 Pulse. Keep pace with your day. Crafted by <span style="font-weight: 600; color: var(--text); background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">Rahul Gupta</span> in synergy with AI.</p>
+            </footer>
+        </div>
+    </section>
+
+    <!-- AUTH PAGE -->
+    <section id="page-auth" class="page">
+        <div class="auth-page">
+            <div class="auth-box">
+                <div id="authBrand" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.25rem;">
+                  <span style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span style="width:14px;height:14px;border-radius:50%;background:white;opacity:0.9;box-shadow:0 0 10px rgba(255,255,255,0.6);"></span>
+                  </span>
+                  <h1 style="margin:0;font-size:2rem;">Pulse</h1>
+                </div>
+                <p id="authSubtitle" class="auth-subtitle">Your AI-powered productivity companion</p>
+
+                <div id="authError" class="auth-error"></div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-wrap">
+                          <input type="password" id="loginPassword" placeholder="Enter your password" minlength="6" required />
+                          <button type="button" class="toggle-pass" data-target="loginPassword" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Log In</button>
+                </form>
+
+                <form id="signupForm" class="hidden">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" placeholder="John Doe" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="password-wrap">
+                          <input type="password" id="signupPassword" placeholder="At least 6 characters" minlength="6" required />
+                          <button type="button" class="toggle-pass" data-target="signupPassword" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupDob">Date of Birth (for password recovery)</label>
+                        <input type="date" id="signupDob" required />
+                    </div>
+                    <button type="submit" class="btn-primary">Create Account</button>
+                </form>
+
+                <p class="auth-switch">
+                    <span id="authSwitchText">Don't have an account?</span>
+                    <a id="authSwitchLink">Sign Up</a>
+                </p>
+
+                <p class="auth-switch" style="margin-top:0.25rem;">
+                    <a id="forgotPasswordLink">Forgot Password?</a>
+                </p>
+
+                <p class="auth-switch" style="margin-top:0.5rem;">
+                    <a id="backToHomeLink" style="font-size:0.8rem; opacity:0.8;">&larr; Back to Features</a>
+                </p>
+            </div>
+
+            <div id="forgotPasswordBox" class="auth-box hidden">
+                <div class="reset-header">
+                    <h2>Reset Password</h2>
+                    <p class="reset-subtitle">Enter your details below to reset your password</p>
+                </div>
+                <form id="resetPasswordForm">
+                    <div class="form-group">
+                        <label for="resetEmail">Email Address</label>
+                        <input type="email" id="resetEmail" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="resetDob">Date of Birth</label>
+                        <input type="date" id="resetDob" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="resetPassword">New Password</label>
+                        <div class="password-wrap">
+                          <input type="password" id="resetPassword" placeholder="At least 6 characters" minlength="6" required />
+                          <button type="button" class="toggle-pass" data-target="resetPassword">Show</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="resetPasswordConfirm">Confirm Password</label>
+                        <div class="password-wrap">
+                          <input type="password" id="resetPasswordConfirm" placeholder="Repeat your password" minlength="6" required />
+                          <button type="button" class="toggle-pass" data-target="resetPasswordConfirm" aria-label="Toggle password visibility">Show</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Reset Password</button>
+                    <div class="reset-back">
+                        <a id="backToLoginLink">&larr; Back to Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD PAGE -->
+    <section id="page-dashboard" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+                <p id="greeting" class="greeting"></p>
+            </header>
+
+            <!-- MENTAL HEALTH & WELL-BEING ROW -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem 0;">
+                <!-- Mental Load Meter Card -->
+                <div class="card" style="margin: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow); border-left: 4px solid var(--secondary); transition: all 0.3s ease;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem;">
+                            <h3 style="margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text);">
+                                <span>🧠</span> Mental Load Meter
+                            </h3>
+                            <span id="loadLevelBadge" style="padding: 0.2rem 0.6rem; font-size: 0.72rem; font-weight: 700; border-radius: 20px; color: #fff; background: var(--secondary);">Low</span>
+                        </div>
+                        <p class="section-desc" style="margin: 0 0 0.75rem; font-size: 0.8rem; color: var(--text-muted);">Real-time cognitive load tracker based on your active tasks, overdue priorities, and calendar slots.</p>
+                        
+                        <div style="height: 10px; background: var(--border); border-radius: 6px; overflow: hidden; margin: 0.75rem 0 0.5rem 0; position: relative;">
+                            <div id="loadProgressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, var(--secondary), var(--primary)); border-radius: 6px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                        </div>
+                        <p id="loadLevelDesc" style="margin: 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.45;">Loading mental load assessment...</p>
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="relieveLoadBtn" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: 8px; display: none; width: 100%; font-weight: 600; text-align: center; border: 1px solid var(--secondary); background: transparent; color: var(--secondary); transition: all 0.2s ease;">
+                            🧘 Auto-Relieve Cognitive Load
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AI Mindful Focus Panel -->
+                <div class="card" style="margin: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow); border-left: 4px solid var(--primary); transition: all 0.3s ease;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem;">
+                            <h3 style="margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text);">
+                                <span>✨</span> Mindful Focus
+                            </h3>
+                            <span style="padding: 0.2rem 0.6rem; font-size: 0.72rem; font-weight: 700; border-radius: 20px; color: var(--primary); background: var(--primary-glow);">Adaptive</span>
+                        </div>
+                        <p class="section-desc" style="margin: 0 0 0.75rem; font-size: 0.8rem; color: var(--text-muted);">Proactive wellness advice to optimize task execution and maintain creative energy throughout your day.</p>
+                        
+                        <div style="border-radius: 8px; padding: 0.75rem; background: var(--btn-ghost-bg); border: 1px dashed var(--border); margin: 0.5rem 0;">
+                            <p style="font-size: 0.78rem; line-height: 1.45; color: var(--text); margin: 0;" id="dynamicMindfulQuote">
+                                "Productivity isn't about doing more; it's about doing what matters most with clear focus and a calm mind."
+                            </p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; align-items: center; width: 100%;">
+                        <button onclick="document.querySelector('.nav-links a[data-page=\'assistant\']')?.click();" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: 8px; width: 100%; font-weight: 600; text-align: center; background: var(--primary); color: white; border: none; transition: all 0.2s ease;">
+                            💬 Talk with Pulse Assistant
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Due Today</div>
+                        <p id="statDueToday" class="skeleton skeleton-text"></p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Overdue</div>
+                        <p id="statOverdue" class="skeleton skeleton-text"></p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Completed</div>
+                        <p id="statCompleted" class="skeleton skeleton-text"></p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Productivity Score</div>
+                        <p id="statScore" class="skeleton skeleton-text"></p>
+                    </div>
+                </div>
+                <div class="auto-pilot-card card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+                        <div>
+                            <h3 style="margin:0 0 0.25rem;">🤖 Auto-Pilot Mode</h3>
+                            <p style="margin:0;font-size:0.8rem;color:var(--text-muted);">Let AI auto-schedule tasks into your free slots and send proactive suggestions</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoPilotToggle" />
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);font-size:0.75rem;color:var(--text-muted);line-height:1.6;">
+                        Runs every <strong>5 minutes</strong> in the background. When enabled, it fits your incomplete tasks into today's free time slots (prioritizes urgent first) and notifies you. Proactive deadline warnings and productivity suggestions are <strong>always on</strong> — even when toggled off.
+                    </div>
+                </div>
+
+                <div class="mood-card card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+                        <div>
+                            <h3 style="margin:0 0 0.25rem;">😊 How are you feeling?</h3>
+                            <p style="margin:0;font-size:0.8rem;color:var(--text-muted);">Log your mood — I'll adapt my suggestions</p>
+                        </div>
+                    </div>
+                    <div id="moodBtns" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;">
+                        <button class="btn-sm mood-btn" data-mood="energetic">⚡ Energetic</button>
+                        <button class="btn-sm mood-btn" data-mood="focused">🎯 Focused</button>
+                        <button class="btn-sm mood-btn" data-mood="neutral">😐 Neutral</button>
+                        <button class="btn-sm mood-btn" data-mood="tired">😴 Tired</button>
+                        <button class="btn-sm mood-btn" data-mood="stressed">😰 Stressed</button>
+                        <button class="btn-sm mood-btn" data-mood="unmotivated">😩 Unmotivated</button>
+                    </div>
+                    <div id="moodStatus" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;"></div>
+                </div>
+                <div class="bottom-grid">
+                    <div class="card">
+                        <h2>Today's Schedule</h2>
+                        <div id="todayTimeline" class="timeline"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Upcoming Deadlines</h2>
+                        <div id="upcomingDeadlines" class="deadline-list"></div>
+                    </div>
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h2>💡 AI Recommendations</h2>
+                            <div id="aiTip" class="ai-tip-card">
+                                <div class="ai-tip-text ai-tip-loading">Loading insights...</div>
+                            </div>
+                    </div>
+                    <div class="card" id="gamificationCard" style="display:none;">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TASKS PAGE -->
+    <section id="page-tasks" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Tasks</h1>
+                <div class="header-actions">
+                    <input type="text" id="searchTask" placeholder="Search tasks..." />
+                    <button id="addTaskBtn" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; height: 38px; min-height: 38px; padding: 0 1rem;">Add Task</button>
+                </div>
+            </header>
+
+            <!-- Natural Language Task Entry bar -->
+            <div class="ai-quick-entry-card">
+                <div class="ai-quick-entry-title">
+                    <span>✨</span> Smart Task Creator
+                </div>
+                <div class="ai-quick-entry-desc">
+                    Type or speak your task (e.g., "AI meeting tomorrow at 3pm high priority"). Gemini will intelligently parse deadlines, categories, and priority level.
+                </div>
+                <div class="ai-quick-entry-wrapper">
+                    <div class="ai-quick-input-container">
+                        <div class="input-glow-wrapper" style="position: relative; flex: 1;">
+                            <span class="ai-quick-input-icon">✨</span>
+                            <input type="text" id="nlTaskInput" class="ai-quick-input" placeholder="Type a task in plain English or click mic..." />
+                        </div>
+                        <button id="nlVoiceBtn" class="ai-voice-btn" title="Voice input" type="button">
+                            <svg class="mic-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                    <button id="nlParseBtn" class="ai-parse-btn" type="button">
+                        Parse with AI
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem;" class="md-tasks-grid">
+                <div>
+                    <div class="task-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="today">Today</button>
+                        <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                        <button class="filter-btn" data-filter="overdue">Overdue</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                    <div id="taskList" class="task-list">
+                        <div class="skeleton skeleton-card"></div>
+                        <div class="skeleton skeleton-card"></div>
+                        <div class="skeleton skeleton-card"></div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMETABLE PAGE -->
+    <section id="page-timetable" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Daily Roadmap</h1>
+                <div class="header-actions">
+                    <button id="openPlannerBtn" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; height: 38px; min-height: 38px; padding: 0.5rem 1rem; border-radius: 8px;">
+                        <span>📅</span> Open Weekly Planner
+                    </button>
+                </div>
+            </header>
+            <p class="section-desc">View your chronological roadmap. Tweak your calendar slots in the Weekly Planner to auto-schedule tasks.</p>
+            
+            <div class="calendar-controls" style="margin-bottom: 1.25rem;">
+                <div class="day-selector">
+                    <button class="day-btn" data-day="0">Sun</button>
+                    <button class="day-btn" data-day="1">Mon</button>
+                    <button class="day-btn" data-day="2">Tue</button>
+                    <button class="day-btn" data-day="3">Wed</button>
+                    <button class="day-btn" data-day="4">Thu</button>
+                    <button class="day-btn" data-day="5">Fri</button>
+                    <button class="day-btn" data-day="6">Sat</button>
+                </div>
+            </div>
+
+            <!-- TODAY'S WORK ROADMAP -->
+            <div class="card roadmap-section" style="margin-top: 0; margin-bottom: 1.5rem; border: 1px solid rgba(16, 185, 129, 0.25); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);">
+                <div class="roadmap-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div>
+                        <h3 style="margin: 0 0 0.25rem; display: flex; align-items: center; gap: 0.5rem;">🗺️ Today's Work Roadmap</h3>
+                        <p class="section-desc" style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Chronological timeline of today's schedule. Click cards to view details & subtasks!</p>
+                    </div>
+                    <div id="roadmapProgressBadge" class="roadmap-progress-badge">0% Complete</div>
+                </div>
+                
+                <div class="roadmap-progress-bar-container" style="height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; margin-bottom: 1.5rem; overflow: hidden; position: relative;">
+                    <div id="roadmapProgressBar" class="roadmap-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.5s ease-out; border-radius: 3px;"></div>
+                </div>
+
+                <div class="roadmap-scroller-container">
+                    <div id="todayRoadmap" class="roadmap-serpentine-wrapper">
+                        <!-- Dynamic winding serpentine roadmap elements go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOALS & HABITS PAGE -->
+    <section id="page-goals" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Goals & Habits</h1>
+                <div class="header-actions">
+                    <button id="addHabitBtn" class="btn-secondary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; height: 38px; min-height: 38px; padding: 0.5rem 1rem;"><span>➕</span> Add Habit</button>
+                    <button id="addGoalBtn" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; font-weight: 600; white-space: nowrap; height: 38px; min-height: 38px; padding: 0.5rem 1rem;"><span>🎯</span> Add Goal</button>
+                </div>
+            </header>
+
+            <div class="stats-grid goals-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Active Goals</div>
+                    <p id="goalTotal">0</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Goals Achieved</div>
+                    <p id="goalCompleted" class="text-success">0</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Habit Streak</div>
+                    <p id="habitStreak">0</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <strong>How it works:</strong> Click the circle on a habit to log it for today. Checking off all habits linked to a goal increments that goal's progress by 1. You can also click <strong>+1</strong> on a goal to manually log progress. Streaks track consecutive days of completing each habit.
+            </div>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <h2>Goals</h2>
+                <p class="section-desc">Set weekly targets and track your progress.</p>
+                <div id="goalList">
+                    <div class="skeleton skeleton-card"></div>
+                    <div class="skeleton skeleton-card"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Daily Habits</h2>
+                <p class="section-desc">Build streaks by completing habits every day.</p>
+                <div id="habitList">
+                    <div class="skeleton skeleton-card"></div>
+                    <div class="skeleton skeleton-card"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALYTICS PAGE -->
+    <section id="page-analytics" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>Productivity Analytics</h1>
+            </header>
+
+            <div class="score-section">
+                <div class="score-circle excellent" id="scoreCircle">
+                    <span id="scoreValue">--</span>
+                </div>
+                <div class="score-details">
+                    <h3 id="scoreLabel">Productivity Score</h3>
+                    <p id="scoreDesc">Your overall task completion rate across all categories.</p>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Tasks Completed</h3>
+                    <canvas id="chartTasks"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Focus Hours</h3>
+                    <canvas id="chartFocus"></canvas>
+                </div>
+                <div class="chart-card chart-full">
+                    <h3>Productivity Score Trend</h3>
+                    <canvas id="chartScore"></canvas>
+                </div>
+                <div class="chart-card chart-full">
+                    <h3>Category Breakdown</h3>
+                    <canvas id="chartCategory"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESS PAGE -->
+    <section id="page-progress" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>🏆 Progress</h1>
+            </header>
+            <div style="max-width:900px;margin:0 auto;">
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div id="progressLevelCard" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                        <div id="progressLevelCircle" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;color:#fff;flex-shrink:0;">-</div>
+                        <div style="flex:1;min-width:200px;">
+                            <div style="font-size:1.1rem;font-weight:600;color:var(--text);">Level <span id="progressLevelNum">-</span></div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px;"><span id="progressXpTotal">0</span> XP — <span id="progressXpNext">0</span> to next level</div>
+                            <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+                                <div id="progressXpBar" style="height:100%;width:0%;background:linear-gradient(90deg,#f59e0b,#ef4444);border-radius:4px;transition:width 0.6s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI WEEKLY DEBRIEF -->
+                <div class="card" style="margin-bottom:1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; position: relative; overflow: hidden; box-shadow: var(--shadow); border-left: 4px solid var(--primary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <div>
+                            <h2 style="margin: 0; display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; color: var(--text);">
+                                <span>✨</span> AI Weekly Debrief
+                            </h2>
+                            <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-muted);">Your Sunday morning performance, mood, and focus analytics debrief.</p>
+                        </div>
+                        <button id="generateDebriefBtn" class="btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: 8px; display: flex; align-items: center; gap: 0.3rem;" type="button">
+                            <span>🔄</span> Scan & Generate
+                        </button>
+                    </div>
+                    <!-- Stats Grid -->
+                    <div id="debriefStatsGrid" style="display: none; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-bottom: 1.25rem; background: var(--primary-glow); padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); opacity: 0.8; font-weight: 500;">Completed Tasks</div>
+                            <div id="debriefStatTasks" style="font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 0.2rem;">0</div>
+                        </div>
+                        <div style="text-align: center; border-left: 1px solid var(--border);">
+                            <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); opacity: 0.8; font-weight: 500;">Focus Sessions</div>
+                            <div id="debriefStatSessions" style="font-size: 1.4rem; font-weight: 700; color: var(--success); margin-top: 0.2rem;">0</div>
+                        </div>
+                        <div style="text-align: center; border-left: 1px solid var(--border);">
+                            <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); opacity: 0.8; font-weight: 500;">Flow Minutes</div>
+                            <div id="debriefStatMinutes" style="font-size: 1.4rem; font-weight: 700; color: var(--warning); margin-top: 0.2rem;">0m</div>
+                        </div>
+                        <div style="text-align: center; border-left: 1px solid var(--border);">
+                            <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text); opacity: 0.8; font-weight: 500;">Top Mood</div>
+                            <div id="debriefStatMood" style="font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-top: 0.4rem;">Neutral</div>
+                        </div>
+                    </div>
+                    <div id="debriefTextContent" style="font-size: 0.88rem; color: var(--text); line-height: 1.6; max-height: 400px; overflow-y: auto; padding-right: 0.5rem; display: none;">
+                        <!-- AI/Fallback Markdown printed here -->
+                    </div>
+                    <div id="debriefPlaceholder" style="text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📊</div>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">Ready to reflect on your week? Click <strong>Scan & Generate</strong> to initiate Pulse AI analytics.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <h2 style="margin-bottom:1rem;">📊 Productivity Heatmap</h2>
+                    <div id="progressHeatmapContainer" style="overflow-x:auto;padding:8px 0;"></div>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <h2 style="margin-bottom:1rem;">🎖️ Achievements</h2>
+                    <div id="progressAchievementsList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI ASSISTANT PAGE -->
+    <section id="page-assistant" class="page">
+        <div class="container">
+            <header class="page-header">
+                <h1>AI Assistant</h1>
+                <button id="voiceBtn" class="btn-secondary" style="display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.85rem; border-radius: 8px;">
+                    <svg class="mic-icon-svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    <span>Voice Input</span>
+                </button>
+            </header>
+            <div class="assistant-layout">
+                <div class="chat-panel">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="chat-msg bot">Hello! I'm your productivity assistant. Ask me anything about your tasks, schedule, or just tell me what you need help with!</div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Ask me anything..." />
+                        <button id="voiceInputBtn" class="voice-btn" title="Voice input">
+                            <svg class="mic-icon-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                        <button id="sendBtn" class="btn-primary">Send</button>
+                    </div>
+                </div>
+                <div class="quick-panel">
+                    <div class="quick-header">
+                        <h3>Quick Actions</h3>
+                        <button class="quick-toggle" id="quickToggle" title="Toggle quick actions">▼</button>
+                    </div>
+                    <div class="quick-btn-grid" id="quickBtnGrid">
+                        <button class="quick-btn" data-query="add task " data-mode="prompt" style="border-color:var(--primary);color:var(--primary);">➕ Add Task</button>
+                        <button class="quick-btn" data-query="add goal " data-mode="prompt" style="border-color:#10b981;color:#10b981;">🎯 Add Goal</button>
+                        <button class="quick-btn" data-query="add habit " data-mode="prompt" style="border-color:#8b5cf6;color:#8b5cf6;">🔄 Add Habit</button>
+
+                        <button class="quick-btn" data-query="What should I do first today?" style="border-color:var(--text-muted);color:var(--text-muted);">📋 Prioritize</button>
+                        <button class="quick-btn" data-query="Break down my most urgent task into steps" style="border-color:var(--text-muted);color:var(--text-muted);">🔨 Break Down</button>
+                        <button class="quick-btn" data-query="Give me a motivational push" style="border-color:var(--text-muted);color:var(--text-muted);">💪 Motivate Me</button>
+                        <button class="quick-btn" data-query="Optimize my schedule for today" style="border-color:var(--text-muted);color:var(--text-muted);">📅 Optimize Day</button>
+                        <button class="quick-btn" data-query="What tasks am I at risk of missing?" style="border-color:var(--text-muted);color:var(--text-muted);">⚠️ Check Risks</button>
+                    </div>
+        </div>
+    </section>
+
+    <!-- 🧪 PULSE ADVANCED LABS PAGE (REMOVED) -->
+    <section id="page-labs" class="page" style="display:none !important;">
+        <div class="container">
+            <header class="page-header">
+                <div>
+                    <h1>🧪 Pulse Advanced AI Labs</h1>
+                    <p class="text-muted" style="margin-top:0.25rem;">Experimental, adaptive, and cognitive tools running live on Google Gemini.</p>
+                </div>
+            </header>
+
+            <div class="labs-grid">
+                <!-- 2. AI NEGOTIATOR FOR DEADLINE CONFLICTS -->
+                <div class="labs-card" id="lab-negotiator">
+                    <span class="labs-tag">Cognitive Agent</span>
+                    <h3>🤝 AI Conflict Negotiator</h3>
+                    <p class="desc">Got conflicting deadlines? Gemini drafts an incredibly polished extension request email tailored to your workspace tone.</p>
+                    
+                    <div class="labs-interactive" style="gap:0.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label style="font-size:0.7rem;font-weight:600;">Conflicting Task A</label>
+                            <select id="negTaskA" style="padding:0.35rem;font-size:0.8rem;"></select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label style="font-size:0.7rem;font-weight:600;">Conflicting Task B</label>
+                            <select id="negTaskB" style="padding:0.35rem;font-size:0.8rem;"></select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label style="font-size:0.7rem;font-weight:600;">Tone Profile</label>
+                            <select id="negTone" style="padding:0.35rem;font-size:0.8rem;">
+                                <option value="Polite & Professional">💼 Polite & Professional</option>
+                                <option value="Casual & Warm">☕ Casual & Warm</option>
+                                <option value="Assertive & Direct">⚡ Assertive & Direct</option>
+                            </select>
+                        </div>
+                        <button id="btnGenerateNegotiation" class="btn-primary btn-sm" style="width:100%;margin-top:0.25rem;">Draft Extension Request</button>
+                        
+                        <div id="negotiationResultBox" class="hidden" style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.5rem;">
+                            <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0.5rem;font-size:0.75rem;position:relative;">
+                                <button id="btnCopyNegotiation" class="btn-sm" style="position:absolute;right:4px;top:4px;padding:2px 6px;font-size:0.65rem;">📋 Copy</button>
+                                <strong id="negSubject" style="display:block;margin-bottom:0.25rem;color:var(--text);"></strong>
+                                <div id="negBody" style="white-space:pre-wrap;font-family:monospace;max-height:120px;overflow-y:auto;color:var(--text-muted);"></div>
+                            </div>
+                            <span id="negTip" style="font-size:0.65rem;color:var(--success);font-weight:600;display:block;margin-top:0.25rem;"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. SHADOW CALENDAR - TIME COST VISUALIZER -->
+                <div class="labs-card" id="lab-shadow-calendar">
+                    <span class="labs-tag">ML-Style Learning</span>
+                    <h3>🕵️ "Shadow Calendar" Visualizer</h3>
+                    <p class="desc">Compares estimated task durations vs. completed focus session times to map your hidden productivity drift.</p>
+                    
+                    <div class="labs-interactive">
+                        <div class="shadow-bars-list" id="shadowBarsContainer">
+                            <!-- Populated dynamically -->
+                        </div>
+                        
+                        <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.5rem;font-size:0.75rem;">
+                            <span style="font-weight:600;display:block;margin-bottom:0.25rem;">💡 Underestimation Adjustment Calculator:</span>
+                            <div style="display:flex;gap:0.35rem;align-items:center;">
+                                <input type="number" id="shadowCalcInput" value="60" style="width:60px;padding:0.25rem;font-size:0.75rem;" min="5" />
+                                <span style="font-size:0.7rem;color:var(--text-muted);">mins study →</span>
+                                <strong id="shadowCalcOutput" style="color:var(--primary);font-size:0.8rem;">84 mins shadow-adjusted</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. LIFE BALANCE RADAR CHART -->
+                <div class="labs-card" id="lab-radar">
+                    <span class="labs-tag">Visualizer</span>
+                    <h3>🕸️ Life Balance Radar Chart</h3>
+                    <p class="desc">A hexagonal radar mapping across 6 life categories. Shows instantly if your active scheduling is lopsided.</p>
+                    
+                    <div class="labs-interactive" style="padding:0.5rem;">
+                        <div class="radar-chart-container">
+                            <svg class="radar-svg" viewBox="0 0 200 200" id="radarSvg">
+                                <!-- Dynamic hexagons and path drawn by JS -->
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. SMART RECURRING TASK INTELLIGENCE -->
+                <div class="labs-card" id="lab-smart-recurring">
+                    <span class="labs-tag">Behavioral Adaptation</span>
+                    <h3>🧠 Smart Recurring Intelligence</h3>
+                    <p class="desc">Observes when you actually complete your recurring habits, proposing calendar updates to match your biological flow.</p>
+                    
+                    <div class="labs-interactive" style="gap:0.5rem;">
+                        <div id="smartRecContainer" style="display:flex;flex-direction:column;gap:0.5rem;max-height:160px;overflow-y:auto;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. "WHAT WOULD I LOSE?" POSTPONE IMPACT ANALYZER -->
+                <div class="labs-card" id="lab-postpone-analyzer">
+                    <span class="labs-tag">Causal Reasoning</span>
+                    <h3>⚖️ "What Would I Lose?" Analyzer</h3>
+                    <p class="desc">Calculates downstream ripple effects, breakable streaks, and delayed goals before you push an active task out.</p>
+                    
+                    <div class="labs-interactive" style="gap:0.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label style="font-size:0.7rem;font-weight:600;">Select Task to Postpone</label>
+                            <select id="postponeTaskSelect" style="padding:0.35rem;font-size:0.8rem;"></select>
+                        </div>
+                        <button id="btnAnalyzePostpone" class="btn-secondary btn-sm" style="width:100%;">Evaluate Postpone Impact</button>
+                        
+                        <div id="postponeResultBox" class="hidden" style="border:1px solid var(--border);border-radius:6px;padding:0.5rem;background:rgba(212,160,80,0.05);font-size:0.75rem;line-height:1.35;margin-top:0.25rem;">
+                            <div style="margin-bottom:0.35rem;"><span style="color:var(--danger);font-weight:700;">🔥 Streak Risk:</span> <span id="postponeStreak"></span></div>
+                            <div style="margin-bottom:0.35rem;"><span style="color:var(--warning);font-weight:700;">🔗 Ripple Effect:</span> <span id="postponeRipple"></span></div>
+                            <div style="margin-bottom:0.35rem;"><span style="color:var(--primary);font-weight:700;">🎯 Goal Impact:</span> <span id="postponeGoal"></span></div>
+                            <div style="font-style:italic;color:var(--text-muted);border-top:1px solid var(--border);padding-top:0.35rem;margin-top:0.35rem;" id="postponeMotivation"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. AMBIENT SOUNDSCAPE TIED TO FOCUS MODE -->
+                <div class="labs-card" id="lab-soundscape-card">
+                    <span class="labs-tag">Demo Impact</span>
+                    <h3>🎵 Mood-Sync Focus Soundscapes</h3>
+                    <p class="desc">Interactive ambient audio widget. Automatically swaps focus frequencies based on your logged mood state.</p>
+                    
+                    <div class="labs-interactive">
+                        <div class="soundscape-widget">
+                            <select id="soundscapeSelect" class="soundscape-select">
+                                <option value="rain">🌧️ Cosy Forest Rain (Stressed)</option>
+                                <option value="lofi">☕ Warm Coffee Lofi (Tired / Bored)</option>
+                                <option value="binaural">🧘 Deep Binaural Beats (Focused)</option>
+                                <option value="synth">🌌 Space Orbit Synth (Energetic)</option>
+                            </select>
+                            <button id="btnToggleSoundscape" class="soundscape-btn" title="Play Soundscape">▶️</button>
+                        </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;">
+                            <div style="display:flex;align-items:center;gap:0.25rem;">
+                                <input type="checkbox" id="soundscapeSyncMood" checked />
+                                <label for="soundscapeSyncMood">Auto-Sync with mood logs</label>
+                            </div>
+                            <span id="soundscapeStatus" style="font-weight:600;color:var(--text-muted);">Stopped</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. PERSONAL PRODUCTIVITY TWIN PERSONA -->
+                <div class="labs-card" id="lab-twin">
+                    <span class="labs-tag">Deeply Viral</span>
+                    <h3>👥 Productivity "Twin" Persona</h3>
+                    <p class="desc">Analyzes logs to generate a witty, behavioral personality profile card of your productivity twin.</p>
+                    
+                    <div class="labs-interactive">
+                        <button id="btnGenerateTwin" class="btn-primary btn-sm" style="width:100%;">Deconstruct My Twin Persona</button>
+                        
+                        <div id="twinProfileBox" class="hidden twin-card-inner" style="border-radius:8px;padding:0.75rem;margin-top:0.5rem;display:flex;flex-direction:column;gap:0.5rem;">
+                            <div style="display:flex;align-items:center;gap:0.5rem;">
+                                <div style="font-size:1.5rem;">🧙‍♂️</div>
+                                <div>
+                                    <h4 id="twinArchetype" style="font-size:0.9rem;font-weight:700;color:var(--primary);"></h4>
+                                    <span style="font-size:0.65rem;color:var(--text-muted);">Your Behavioral Archetype</span>
+                                </div>
+                            </div>
+                            <p id="twinBio" style="font-size:0.75rem;line-height:1.35;color:var(--text);margin-bottom:0.25rem;"></p>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.7rem;border-top:1px solid var(--border);padding-top:0.5rem;">
+                                <div>🌅 Peak Zone: <strong id="twinPeak" style="color:var(--secondary);"></strong></div>
+                                <div>🛡️ Superpower: <strong id="twinSuper" style="color:var(--success);"></strong></div>
+                                <div style="grid-column: span 2;">⚠️ Kryptonite: <strong id="twinKryptonite" style="color:var(--danger);"></strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. INTEGRATIONS HUB - NOTION / TODOIST IMPORT -->
+                <div class="labs-card" id="lab-integrations-import">
+                    <span class="labs-tag">Ecosystem Hub</span>
+                    <h3>📥 Workspace Sync Hub</h3>
+                    <p class="desc">Paste tasks exported from Notion or Todoist. Gemini parses task metadata intelligently, mapping directly to Pulse.</p>
+                    
+                    <div class="labs-interactive" style="gap:0.5rem;">
+                        <textarea id="importRawText" placeholder="Paste Notion page URL, database copy, or Todoist CSV copy here..." style="font-size:0.75rem;padding:0.4rem;height:65px;border-radius:4px;border:1px solid var(--border);background:var(--bg);color:var(--text);resize:none;"></textarea>
+                        <button id="btnImportWorkspace" class="btn-primary btn-sm" style="width:100%;">Sync & Sync to Calendar</button>
+                        <span id="importStatus" style="font-size:0.65rem;color:var(--text-muted);text-align:center;display:block;">Supports clipboard copy format.</span>
+                    </div>
+                </div>
+
+                <!-- 10. WHATSAPP / TELEGRAM BOT INTERFACE -->
+                <div class="labs-card" id="lab-bot-simulator">
+                    <span class="labs-tag">Demo Hotkey</span>
+                    <h3>📱 WhatsApp & Telegram Live Bot</h3>
+                    <p class="desc">A realistic live simulation of the Pulse Link Bot. Message the bot to query schedule or insert tasks in real-time!</p>
+                    
+                    <div class="bot-simulator-wrapper">
+                        <div class="bot-sim-header">
+                            <div class="bot-sim-dot"></div>
+                            <strong>Pulse Link Bot (Telegram)</strong>
+                        </div>
+                        <div class="bot-sim-messages" id="botSimMessages">
+                            <div class="bot-sim-bubble bot">
+                                Hey! 🤖 I'm your Pulse Chat assistant. You can text me in plain language to check schedule or add tasks!
+                            </div>
+                            <div class="bot-sim-bubble bot">
+                                Try sending: <em>"add task Buy Groceries urgent"</em> or <em>"what is on my plate today?"</em>
+                            </div>
+                        </div>
+                        <div class="bot-sim-input-row">
+                            <input type="text" id="botSimInput" class="bot-sim-input" placeholder="Type message to Pulse Bot..." />
+                            <button id="botSimSendBtn" class="bot-sim-send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOAL MODAL -->
+    <div id="goalModal" class="modal hidden">
+        <div class="modal-content modal-sm">
+            <span class="modal-close">&times;</span>
+            <h2 id="goalModalTitle">New Goal</h2>
+            <form id="goalForm">
+                <input type="hidden" id="goalModalId" />
+                <div class="form-group">
+                    <label for="goalFormTitle">Goal Title</label>
+                    <input type="text" id="goalFormTitle" placeholder="e.g. Exercise 3 times per week" required />
+                </div>
+                <div class="form-group">
+                    <label for="goalFormDesc">Description (optional)</label>
+                    <textarea id="goalFormDesc" placeholder="Why this goal matters..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="goalFormCategory">Category</label>
+                        <select id="goalFormCategory">
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="study">Study</option>
+                            <option value="health">Health</option>
+                            <option value="finance">Finance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalFormTarget">Weekly Target</label>
+                        <input type="number" id="goalFormTarget" min="1" value="1" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="goalCollaborator">👥 Collaborator Email (Optional)</label>
+                    <input type="email" id="goalCollaborator" placeholder="partner@example.com" />
+                </div>
+                <div class="form-group">
+                    <label>📍 Location</label>
+                    <div id="goalLocationField"></div>
+                </div>
+                <div class="form-group">
+                    <label>🔗 Media / Links</label>
+                    <div id="goalLinksField"></div>
+                </div>
+                <button type="submit" class="btn-primary">Save Goal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HABIT MODAL -->
+    <div id="habitModal" class="modal hidden">
+        <div class="modal-content modal-sm">
+            <span class="modal-close">&times;</span>
+            <h2 id="habitModalTitle">New Habit</h2>
+            <form id="habitForm">
+                <input type="hidden" id="habitModalId" />
+                <div class="form-group">
+                    <label for="habitFormTitle">Habit Name</label>
+                    <input type="text" id="habitFormTitle" placeholder="e.g. Morning run" required />
+                </div>
+                <div class="form-group">
+                    <label for="habitFormGoal">Linked Goal (optional)</label>
+                    <select id="habitFormGoal"></select>
+                </div>
+                <div class="form-group">
+                    <label for="habitFormFreq">Frequency</label>
+                    <select id="habitFormFreq">
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📍 Location</label>
+                    <div id="habitLocationField"></div>
+                </div>
+                <div class="form-group">
+                    <label>🔗 Media / Links</label>
+                    <div id="habitLinksField"></div>
+                </div>
+                <button type="submit" class="btn-primary">Save Habit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="taskModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="taskModalTitle">New Task</h2>
+            <form id="taskForm">
+                <input type="hidden" id="taskId" />
+                <div class="form-group">
+                    <label for="taskTitle">Title</label>
+                    <input type="text" id="taskTitle" placeholder="What do you need to do?" required />
+                </div>
+                <div class="form-group">
+                    <label for="taskDesc">Description</label>
+                    <textarea id="taskDesc" placeholder="Add any details (optional)"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskCategory">Category</label>
+                        <select id="taskCategory">
+                            <option value="work">Work</option>
+                            <option value="study">Study</option>
+                            <option value="personal">Personal</option>
+                            <option value="health">Health</option>
+                            <option value="finance">Finance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date</label>
+                        <input type="date" id="taskDueDate" />
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueTime">Due Time</label>
+                        <input type="time" id="taskDueTime" />
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDuration">Duration</label>
+                        <input type="number" id="taskDuration" min="5" step="5" value="30" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskCollaborator">👥 Collaborator Email (Optional)</label>
+                    <input type="email" id="taskCollaborator" placeholder="partner@example.com" />
+                </div>
+                <div class="form-group">
+                    <label>📍 Location</label>
+                    <div id="taskLocationField"></div>
+                </div>
+                <div class="form-group">
+                    <label>🔗 Media / Links</label>
+                    <div id="taskLinksField"></div>
+                </div>
+                <button type="submit" class="btn-primary">Save Task</button>
+                <button type="button" id="aiBreakdownBtn" class="btn-secondary" style="margin-top: 0.5rem;">✨ Generate Subtasks</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TASK DETAIL MODAL FOR ROADMAP -->
+    <div id="taskDetailModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 520px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-card); padding: 1.75rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); position: relative; overflow: hidden;">
+            <span class="modal-close" onclick="Utils.hideModal('taskDetailModal')" style="position: absolute; right: 1rem; top: 1rem; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; color: var(--text-muted); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border); border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.12)'; this.style.color='var(--text)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.06)'; this.style.color='var(--text-muted)'">&times;</span>
+            <div id="taskDetailContent">
+                <!-- Dynamic contents filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="slotModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="slotModalTitle">Add Fixed Time Slot</h2>
+            <form id="slotForm">
+                <input type="hidden" id="slotId" />
+                <div class="form-group">
+                    <label for="slotTitle">Activity</label>
+                    <input type="text" id="slotTitle" placeholder="e.g. Class, Work, Sleep, Gym" required />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="slotDay">Day</label>
+                        <select id="slotDay">
+                            <option value="0">Sunday</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="slotColor">Color</label>
+                        <input type="color" id="slotColor" value="#6366f1" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="slotStart">Start Time</label>
+                        <input type="time" id="slotStart" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="slotEnd">End Time</label>
+                        <input type="time" id="slotEnd" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Save Slot</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div id="profileModal" class="modal hidden">
+        <div class="modal-content modal-sm">
+            <span class="modal-close">&times;</span>
+            <h2>Edit Name</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profileName">Name</label>
+                    <input type="text" id="profileName" required />
+                </div>
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+            <hr style="margin:1.5rem 0;border-color:var(--border-color)" />
+            <h3 style="margin-bottom:0.75rem">Export</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+                <button class="btn-secondary btn-sm" onclick="downloadExport('/api/export/csv/tasks','pulse_tasks.csv')">Tasks CSV</button>
+                <button class="btn-secondary btn-sm" onclick="downloadExport('/api/export/csv/goals','pulse_goals.csv')">Goals CSV</button>
+                <button class="btn-secondary btn-sm" onclick="downloadExport('/api/export/csv/habits','pulse_habits.csv')">Habits CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLLAPSIBLE PLANNER DRAWER & BACKDROP -->
+    <div id="drawerBackdrop" class="drawer-backdrop"></div>
+    <div id="plannerDrawer" class="planner-drawer">
+        <div class="planner-drawer-header">
+            <h3><span>📅</span> Weekly Planner Center</h3>
+            <button id="closePlannerBtn" class="planner-drawer-close">&times;</button>
+        </div>
+        <div class="planner-drawer-body">
+            <p class="section-desc" style="margin: 0 0 -0.5rem 0; font-size: 0.85rem; line-height: 1.5;">Configure your weekly commitments (e.g. classes, sleeping hours) here. AI will place tasks in remaining open gaps.</p>
+            
+            <div style="display: flex; gap: 0.75rem; width: 100%;">
+                <button id="addSlotBtn" class="btn-primary" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.55rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600;">
+                    <span>➕</span> Add Slot
+                </button>
+                <button id="optimizeDayBtn" class="btn-secondary" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.55rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600;">
+                    <span>✨</span> Optimize Day
+                </button>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 1rem;">
+                <h4 style="margin: 0 0 0.75rem 0; font-size: 0.9rem; color: var(--text);">📅 Weekly Canvas (Selected Day)</h4>
+                <div class="calendar-controls" style="margin-bottom: 0.75rem;">
+                    <div class="day-selector" style="transform: scale(0.95); transform-origin: left center;">
+                        <button class="day-btn" data-day="0">Sun</button>
+                        <button class="day-btn" data-day="1">Mon</button>
+                        <button class="day-btn" data-day="2">Tue</button>
+                        <button class="day-btn" data-day="3">Wed</button>
+                        <button class="day-btn" data-day="4">Thu</button>
+                        <button class="day-btn" data-day="5">Fri</button>
+                        <button class="day-btn" data-day="6">Sat</button>
+                    </div>
+                </div>
+                <div class="timetable-grid" id="timetableCanvas" style="max-height: 380px; overflow-y: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--input-bg); padding: 0.5rem;"></div>
+            </div>
+
+            <div class="card optimize-section" style="margin: 0; background: var(--input-bg); border: 1px solid var(--border); border-radius: 14px;">
+                <h3 style="margin-top: 0; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem;">🔒 Your Fixed Commitments</h3>
+                <div id="fixedSlotList" style="max-height: 200px; overflow-y: auto; margin-top: 0.75rem;"></div>
+                <div id="optimizeResult" class="optimize-result" style="margin-top: 0.75rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/toast.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/reminders.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/goals.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/mood.js"></script>
+    <script src="js/ai-assistant.js"></script>
+    <script src="js/integrations.js"></script>
+    <script src="js/connections.js"></script>
+    <script src="js/media.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
